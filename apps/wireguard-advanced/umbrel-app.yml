@@ -1,4 +1,4 @@
-id: "wireguard-advanced"
+id: "wireguard_advanced"
 name: "WireGuard Advanced"
 version: "1.0.0"
 manifestVersion: 1
