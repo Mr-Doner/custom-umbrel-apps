@@ -6,7 +6,7 @@ description: "WireGuard VPN backend paired with an advanced management UI."
 category: "Network"
 developer: "Levi"
 website: "https://github.com/Mr-Doner/custom-umbrel-apps"
-submitter: "Mr_Doner"
+submitter: "Mr-Doner"
 submissionDate: "2026-05-17"
 icon: "https://raw.githubusercontent.com/getumbrel/umbrel-apps/master/wireguard/icon.svg"
 port: 5000
