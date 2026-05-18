@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+  # The WireGuard Core Backend (wg-easy)
+  wireguard-backend:
+    image: ghcr.io/wg-easy/wg-easy:latest
+    container_name: wireguard_backend
+    restart: unless-stopped
+    environment:
+      - WG_HOST=vpn.controlpanle.com
+      - PASSWORD_HASH=$$2a$$12$$your_hashed_password_here
+      - PORT=51821
+      - WG_PORT=51820
+    volumes:
+      - ${APP_DATA_DIR}/data:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+
+  # The Advanced UI Frontend
+  advanced-ui:
+    image: ngoduykhanh/wireguard-ui:latest
+    container_name: wireguard_advanced_ui
+    restart: unless-stopped
+    environment:
+      - SENDGRID_API_KEY=
+      - EMAIL_FROM_ADDRESS=
+      - EMAIL_FROM_NAME=
+      - SESSION_SECRET=something_secret_here
+    volumes:
+      - ${APP_DATA_DIR}/ui_data:/app/db
+      - ${APP_DATA_DIR}/data:/etc/wireguard # Shares the config directory with the backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - wireguard-backend
